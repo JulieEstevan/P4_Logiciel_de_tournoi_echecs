@@ -1,1 +1,1 @@
-# P4_Logiciel-de-tournoi-echecs
+# P4_Logiciel_de_tournoi_echecs
