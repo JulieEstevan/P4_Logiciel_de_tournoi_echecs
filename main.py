@@ -1,21 +1,15 @@
-from models.model import TodoModel
-from views.view import TodoView
-from controllers.controller import TodoController
+from controllers.PlayerController import PlayerController
 
 def main():
-    model = TodoModel()
-    view = TodoView()
-    controller = TodoController(model, view)
+    controller = PlayerController()
 
     while True:
-        print("\n1. Add Todo\n2. Remove Todo\n3. Exit")
+        print("\n1. Create Player\n2. Exit")
         choice = input("Choose an option: ")
 
         if choice == '1':
-            controller.add_todo_item()
+            controller.create_player()
         elif choice == '2':
-            controller.remove_todo_item()
-        elif choice == '3':
             break
         else:
             print("Invalid choice. Please try again.")
