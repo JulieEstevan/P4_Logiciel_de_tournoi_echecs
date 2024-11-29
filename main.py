@@ -8,7 +8,7 @@ def main():
         choice = input("Choose an option: ")
 
         if choice == '1':
-            controller.create_player()
+            controller.create_player_controller()
         elif choice == '2':
             break
         else:
