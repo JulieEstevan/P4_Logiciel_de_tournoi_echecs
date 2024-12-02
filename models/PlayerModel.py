@@ -1,7 +1,6 @@
 from tinydb import TinyDB, Query, where
 import os
 import json
-import datetime
 
 class PlayerModel:
 
@@ -9,7 +8,7 @@ class PlayerModel:
         self,
         lastname: str,
         firstname: str,
-        birth_date: datetime,
+        birth_date: str,
         national_id: str,
         points: float
     ) -> None:
@@ -44,7 +43,7 @@ class PlayerManager:
             with open("data/players.json", "w") as f:
                 json.dump([], f)
 
-    def add_player(self, lastname, firstname, birth_date, national_id, points):
+    def add_player(self, lastname: str, firstname:str, birth_date: str, national_id: str, points: float):
         """Ajout d'un joueur dans la base de donnees"""
 
         player = PlayerModel(lastname, firstname, birth_date, national_id, points)
@@ -58,12 +57,31 @@ class PlayerManager:
         print(f"Le joueur {player.lastname} {player.firstname} a ete ajoute a la base de donnees")
 
     def update_player_points(self):
-        """Mise a jour des informations d'un joueur dans la base de donnees"""
+        """Mise a jour des points d'un joueur dans la base de donnees"""
         pass
 
-    def players_list(self):
-        """Creation d'une liste regroupant tout les joueurs present dans la base de donnees"""
-        pass
+    def players_list(self) -> list:
+        """Creation d'une liste dans l'ordre alphabetique de tout les joueurs present dans la base de donnees"""
+        players_data = self.players_table.all()
+        players = []
+        for player in players_data:
+            player_model = PlayerModel(
+                    player["lastname"],
+                    player["firstname"],
+                    player["birth_date"],
+                    player["national_id"],
+                    player["points"],
+                )
+            players.append(
+                {"Nom" : player_model.lastname,
+                 "Prenom" : player_model.firstname,
+                 "Date de naissance" : player_model.birth_date,
+                 "ID" : player_model.national_id,
+                 "Points" : player_model.points,}
+            )
+        players = sorted(players, key=str)
+
+        return players
 
     def get_player_by_id(self, national_id):
         """Recherche un joueur dans la base de donnees via son ID national d'echecs"""

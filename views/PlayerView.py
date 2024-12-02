@@ -1,6 +1,5 @@
-import re
 from utils.InputValidator import InputValidator
-
+from tabulate import tabulate
 class PlayerView:
 
     def create_player_view(self):
@@ -16,3 +15,12 @@ class PlayerView:
         
 
         return lastname, firstname, birth_date, national_id, points
+    
+    def players_list_view(self, list):
+        """Affiche une liste des Joueurs sur la console"""
+
+        print(tabulate(list, headers="keys"))
+
+        
+
+        
