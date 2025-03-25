@@ -1,4 +1,5 @@
 from tabulate import tabulate
+from typing import Any
 
 class PlayerView:
     """
@@ -58,19 +59,26 @@ class PlayerView:
         print(tabulate(list, headers="keys"))
     
     @staticmethod
-    def display_player_added_successfully() -> None:
+    def display_player_added_successfully(last_name: str, first_name: str) -> None:
         """
         Displays a message to inform the user that the player has been successfully added.
+
+        Parameters
+        ----------
+        last_name : str
+            Player's last name
+        first_name : str
+            Player's first name
 
         Returns
         -------
         None
         """
 
-        print("Joueur ajouté avec succès")
+        print(f"Le.a joueur.euse {last_name} {first_name} a été ajouté avec succès")
 
     @staticmethod
-    def display_error(error) -> None:
+    def display_error(error: Any) -> None:
         """
         Displays a message to inform the user that an error occured.
 

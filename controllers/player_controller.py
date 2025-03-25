@@ -33,6 +33,7 @@ class PlayerController:
             last_name, first_name, birth_date, national_id = PlayerView.request_player_info()
             player = Player(last_name, first_name, birth_date, national_id)
             Player.save_player(player.player_json())
+            PlayerView.display_player_added_successfully(last_name, first_name)
         except ValueError as e:
             PlayerView.display_error(e)
 
@@ -49,8 +50,8 @@ class PlayerController:
         players = []
         for player in Player.load_players():
             player_model = Player(
-                    player["lastname"],
-                    player["firstname"],
+                    player["last_name"],
+                    player["first_name"],
                     player["birth_date"],
                     player["national_id"],
                 )
@@ -62,6 +63,6 @@ class PlayerController:
             )
         players = sorted(players, key=str)
         if players == []:
-            PlayerView.display_error("Aucun joueur n'a été enregistré")
+            PlayerView.display_error("Aucun.e joueur.euse n'a été enregistré")
         else:
             PlayerView.players_list(players)

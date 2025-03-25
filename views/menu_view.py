@@ -15,7 +15,16 @@ class MenuView:
         print("\n--- Menu joueurs ---\n")
         print("1. Ajouter un joueur")
         print("2. Liste des joueurs")
-        print("3. Retour au menu principal \n")
+        print("3. Retour au menu principal\n")
+
+    @staticmethod
+    def display_tournament_menu() -> None:
+
+        print("\n--- Menu Tournoi ---\n")
+        print("1. Créer un tournoi")
+        print("2. Débuter un tournoi")
+        print("3. Liste des tournois")
+        print("4. Retour au menu principal\n")
 
     @staticmethod
     def display_invalid_choice() -> None:

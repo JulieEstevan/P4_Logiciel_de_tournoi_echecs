@@ -1,5 +1,6 @@
 from views.menu_view import MenuView
 from controllers.player_controller import PlayerController
+from controllers.tournament_controller import TournamentController
 from utils.clear import clear_terminal
 
 class MenuController:
@@ -30,8 +31,26 @@ class MenuController:
 
     def tournament_menu(self):
 
-        # In developpment
-        pass
+        controller = TournamentController()
+
+        while True:
+            self.view.display_tournament_menu()
+            choice = self.view.get_user_choice()
+
+            if choice == "1":
+                clear_terminal()
+                controller.create_tournament()
+            elif choice == "2":
+                clear_terminal()
+                controller #Start Tournament
+            elif choice == "3":
+                clear_terminal()
+                controller #List of Tournaments
+            elif choice == "4":
+                clear_terminal()
+                break
+            else:
+                self.view.display_invalid_choice()
 
     def report_menu(self):
 
@@ -49,6 +68,9 @@ class MenuController:
             if choice == "1":
                 clear_terminal()
                 self.player_menu()
+            elif choice == "2":
+                clear_terminal()
+                self.tournament_menu()
             elif choice == "4":
                 self.view.display_goodbye()
                 break

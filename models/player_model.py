@@ -4,27 +4,29 @@ from tinydb import TinyDB
 
 class Player:
     """
-    Define a player in a tournament.
+    Defines a player in a tournament.
 
     ...
 
     Attributes
     ----------
-        last_name : str 
-            Player's last name
-        first_name : str
-            Player's first name
-        birth_date : str 
-            Player's birth date
-        national_id : str
-            Player's national ID
+    last_name : str 
+        Player's last name
+    first_name : str
+        Player's first name
+    birth_date : str 
+        Player's birth date
+    national_id : str
+        Player's national ID
+    points : float, optional
+        Player's points in a tournament
     
     Methods
     -------
     player_json()
         Returns player data in JSON format.
     players_db()
-        Returns the access from players table.
+        Returns the access of the players table.
     save_player(player: dict)
         Save the player's info into the players table.
     load_players()
@@ -35,7 +37,7 @@ class Player:
 
     def __init__(self, last_name: str, first_name: str, birth_date: str, national_id: str) -> None:
         """
-        Constructs all the necessary attributes for the player.
+        Initializes a new player.
 
         Parameters
         ----------
@@ -52,6 +54,10 @@ class Player:
         ------
         ValueError
             If the national ID or birth date format is invalid
+
+        Returns
+        -------
+        None
         """
 
         self.last_name = last_name
@@ -86,22 +92,23 @@ class Player:
 
         Returns
         -------
-        self : dict
+        player_json : dict
             A dictionarry in JSON format
         """
 
         player_json = {
-            "lastname": self.last_name,
-            "firstname": self.first_name,
+            "last_name": self.last_name,
+            "first_name": self.first_name,
             "birth_date": self.birth_date,
-            "national_id": self.national_id
+            "national_id": self.national_id,
+            "points": self.points
         }
         return player_json
 
     @classmethod
     def players_db(cls) -> TinyDB:
         """
-        Returns the access from players table.
+        Returns the access of the players table.
 
         Returns
         -------
@@ -151,7 +158,7 @@ class Player:
 
         return players_data
     
-    def update_points(self, points: float):
+    def update_points(self, points: float) -> None:
         """
         Updates the player's points.
 
