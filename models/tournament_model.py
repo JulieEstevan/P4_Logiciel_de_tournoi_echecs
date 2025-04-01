@@ -2,7 +2,7 @@ from models.round_model import Round
 from models.player_model import Player
 import os
 from datetime import datetime
-from tinydb import TinyDB
+from tinydb import TinyDB, Query
 
 class Tournament:
     """
@@ -80,7 +80,7 @@ class Tournament:
         self.rounds = []
         self.players = []
         self.description = str("")
-        self.pairs_already_played = set()
+        self.pairs_already_played = []
 
     def tournament_json(self) -> dict:
         """
@@ -102,12 +102,12 @@ class Tournament:
             "rounds": self.rounds,
             "players": self.players,
             "description": self.description,
-            "pairs_already_played": list(self.pairs_already_played)
+            "pairs_already_played": self.pairs_already_played
         }
 
         return tournament_json
     
-    def add_player(self, player: Player) -> None:
+    def add_player(self, player) -> None:
         """
         Adds a player in the tournament's players list.
 
@@ -123,7 +123,7 @@ class Tournament:
 
         self.players.append(player)
 
-    def add_round(self, round_instance: Round) -> None:
+    def add_round(self, tournament) -> None:
         """
         Adds a round in the tournament's rounds list.
 
@@ -137,8 +137,10 @@ class Tournament:
         None
         """
 
-        self.rounds.append(round_instance)
-        self.current_round += 1
+        self.tournaments_db().update({"rounds" : self.rounds}, Query().name == tournament.name)
+        self.tournaments_db().update({"pairs_already_played" : self.pairs_already_played}, Query().name == tournament.name)
+        self.tournaments_db().update({"current_round" : self.current_round})
+        
 
     def get_ranking(self) -> list:
         """

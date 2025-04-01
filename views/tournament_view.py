@@ -1,8 +1,5 @@
 class TournamentView:
 
-    def __init__(self):
-        pass
-
     @staticmethod
     def request_tournament_info() -> tuple:
         """
@@ -33,6 +30,13 @@ class TournamentView:
 
         return choice
     
+    def display_tournament_list_by_index(tournaments):
+        for index, tournament in enumerate(tournaments, start=1):
+            print(f"{index}. {tournament.name}")
+
+    def choice_for_tournament_to_start():
+        return input("Entrez le numéro du tournoi à sélectionner (ou 'retour' pour revenir au menu principal : ")
+
     @staticmethod
     def display_message(message: str) -> None:
         """

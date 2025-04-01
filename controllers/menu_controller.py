@@ -42,7 +42,9 @@ class MenuController:
                 controller.create_tournament()
             elif choice == "2":
                 clear_terminal()
-                controller #Start Tournament
+                tournament = controller.select_tournament()
+                if tournament:
+                    controller.play_tournament(tournament)
             elif choice == "3":
                 clear_terminal()
                 controller #List of Tournaments
