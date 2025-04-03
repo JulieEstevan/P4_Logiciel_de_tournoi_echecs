@@ -136,13 +136,20 @@ class Tournament:
         -------
         None
         """
+        self.current_round += 1
 
         self.tournaments_db().update({"rounds" : self.rounds}, Query().name == tournament.name)
         self.tournaments_db().update({"pairs_already_played" : self.pairs_already_played}, Query().name == tournament.name)
         self.tournaments_db().update({"current_round" : self.current_round})
         
+    def update_player_score(self, player_points, player_id):
 
-    def get_ranking(self) -> list:
+        for player in self.players:
+            if player["national_id"] == player_id:
+                player["points"] = player_points
+        self.tournaments_db().update({"players" : self.players})
+
+    def get_ranking(self, players) -> list:
         """
         Returns a sorted list of the players in the tournaments based on theirs points.
 
@@ -153,7 +160,7 @@ class Tournament:
         """
 
         ranking = sorted(
-            self.players, key=lambda player: player.points, reverse=True
+            players, key=lambda player: player["points"], reverse=True
         )
 
         return ranking

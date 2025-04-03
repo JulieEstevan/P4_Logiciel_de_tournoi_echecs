@@ -100,5 +100,5 @@ class TournamentController:
     @staticmethod
     def play_tournament(tournament):
 
-        tournament_players = tournament.players
-        RoundController.first_round(tournament_players, tournament)
+        RoundController.first_round(tournament)
+        RoundController.generate_round(tournament)

@@ -1,10 +1,15 @@
 class MatchView:
 
     @staticmethod
+    def display_matches(match, round):
+
+        print(f"\n--- Match --- {match.player1[0]} contre {match.player2[0]}")
+
+    @staticmethod
     def requested_score(match):
-        print(f"\n--- Match ---\n {match.player1[0]} contre {match.player2[0]}\n")
+
         return input(
-            f"Qui a gagné ? (1 pour {match.player1[0]}, 2 pour {match.player2[0]}, N pour match nul) : "
+            f"\nQui a gagné ? (1 pour {match.player1[0]}, 2 pour {match.player2[0]}, N pour match nul) : "
         )
     
     @staticmethod
