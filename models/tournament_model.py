@@ -123,6 +123,10 @@ class Tournament:
 
         self.players.append(player)
 
+    def update_pairs_already_played(self, tournament):
+
+        self.tournaments_db().update({"pairs_already_played" : self.pairs_already_played}, Query().name == tournament.name)
+
     def add_round(self, tournament) -> None:
         """
         Adds a round in the tournament's rounds list.
@@ -136,18 +140,16 @@ class Tournament:
         -------
         None
         """
-        self.current_round += 1
 
         self.tournaments_db().update({"rounds" : self.rounds}, Query().name == tournament.name)
-        self.tournaments_db().update({"pairs_already_played" : self.pairs_already_played}, Query().name == tournament.name)
-        self.tournaments_db().update({"current_round" : self.current_round})
+        self.tournaments_db().update({"current_round" : self.current_round}, Query().name == tournament.name)
         
-    def update_player_score(self, player_points, player_id):
+    def update_player_score(self, player_points, player_id, tournament):
 
         for player in self.players:
             if player["national_id"] == player_id:
                 player["points"] = player_points
-        self.tournaments_db().update({"players" : self.players})
+        self.tournaments_db().update({"players" : self.players}, Query().name == tournament.name)
 
     def get_ranking(self, players) -> list:
         """
@@ -165,7 +167,7 @@ class Tournament:
 
         return ranking
     
-    def end_tournament(self) -> None:
+    def end_tournament(self, tournament) -> None:
         """
         End the tournament by adding the end date in the tournament data.
 
@@ -174,7 +176,9 @@ class Tournament:
         None
         """
 
-        self.end_date = datetime.now().strftime("%d/%m/%Y")
+        self.tournaments_db().update({"start_date" : self.start_date}, Query().name == tournament.name)
+        self.tournaments_db().update({"end_date" : self.end_date}, Query().name == tournament.name)
+        self.tournaments_db().update({"description" : self.description}, Query().name == tournament.name)
     
     @classmethod
     def tournaments_db(cls) -> TinyDB:

@@ -2,6 +2,7 @@ from models.tournament_model import Tournament
 from models.player_model import Player
 from views.tournament_view import TournamentView
 from controllers.round_controller import RoundController
+from datetime import datetime
 class TournamentController:
 
     @staticmethod
@@ -39,6 +40,8 @@ class TournamentController:
                 # Force the user to enter a minimum of players based on the number of rounds
                 elif len(added_players) < int(number_of_rounds) + 1:
                     TournamentView.display_message(f"Le nombre de joueurs est insuffisant pour ce tournoi. Nombre de joueurs minimum requis = {int(number_of_rounds) + 1}")
+                elif len(added_players) % 2 != 0:
+                    TournamentView.display_message(f"Ce gestionnaire de tournoi ne peut gérer qu'un nombre de joueurs pairs.")
                 else:
                     break
 
@@ -61,7 +64,7 @@ class TournamentController:
 
         # Finalize the creation of the tournament        
         Tournament.save_tournament(tournament.tournament_json())
-        TournamentView.display_message(f"Le tournoi {name} a été créé avec succès.")
+        TournamentView.display_message(f"Le tournoi -- {name} -- a été créé avec succès.")
 
     @staticmethod
     def select_tournament():
@@ -100,5 +103,13 @@ class TournamentController:
     @staticmethod
     def play_tournament(tournament):
 
+        """tournament.start_date = datetime.now().strftime("%d/%m/%Y")
         RoundController.first_round(tournament)
-        RoundController.generate_round(tournament)
+        while tournament.current_round < tournament.number_of_rounds:
+            RoundController.generate_round(tournament)
+        tournament.end_date = datetime.now().strftime("%d/%m/%Y")
+        tournament.description = TournamentView.requested_tournament_description()
+        tournament.end_tournament(tournament)"""
+        tournament.players = tournament.get_ranking(tournament.players)
+        TournamentView.tournament_summary(tournament)
+        TournamentView.display_message(f"\nLe tournoi -- {tournament.name} -- est terminé.")

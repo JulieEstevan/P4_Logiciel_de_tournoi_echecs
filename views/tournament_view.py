@@ -36,6 +36,17 @@ class TournamentView:
 
     def choice_for_tournament_to_start():
         return input("Entrez le numéro du tournoi à sélectionner (ou 'retour' pour revenir au menu principal : ")
+    
+    def requested_tournament_description():
+        return input(f"Entrez la description du tournoi :")
+    
+    def tournament_summary(tournament):
+        print("\n---- Récapitulatif du tournoi ----\n")
+        print(f"Le tournoi -- {tournament.name} -- se deroulant a {tournament.location} a debute le {tournament.start_date} et s'est termine le {tournament.end_date}")
+        print(f"C'etait un tournoi en {tournament.number_of_rounds} tours, avec {len(tournament.players)} joueurs")
+        print("\n---- Classement des joueurs ----\n")
+        for index, player in enumerate(tournament.players, start=1):
+            print(f"{index}. {player["last_name"]} {player["first_name"]} (Score: {player["points"]})")
 
     @staticmethod
     def display_message(message: str) -> None:
