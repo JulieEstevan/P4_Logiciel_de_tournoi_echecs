@@ -1,4 +1,3 @@
-from models.match_model import Match
 from views.match_view import MatchView
 
 class MatchController:

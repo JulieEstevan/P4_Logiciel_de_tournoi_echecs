@@ -1,6 +1,7 @@
 from views.menu_view import MenuView
 from controllers.player_controller import PlayerController
 from controllers.tournament_controller import TournamentController
+from controllers.report_controller import ReportController
 from utils.clear import clear_terminal
 
 class MenuController:
@@ -43,11 +44,13 @@ class MenuController:
             elif choice == "2":
                 clear_terminal()
                 tournament = controller.select_tournament()
-                if tournament:
+                if tournament and not tournament.end_date:
                     controller.play_tournament(tournament)
+                else:
+                    self.view.display_message("Ce tournoi est deja termine")
             elif choice == "3":
                 clear_terminal()
-                controller #List of Tournaments
+                controller.display_tournaments_list()
             elif choice == "4":
                 clear_terminal()
                 break
@@ -56,8 +59,53 @@ class MenuController:
 
     def report_menu(self):
 
-        # In developpment
-        pass
+        controller = ReportController()
+
+        while True:
+            self.view.display_report_menu()
+            choice = self.view.get_user_choice()
+
+            if choice == "1":
+                clear_terminal()
+                controller.display_players_report()
+            elif choice == "2":
+                clear_terminal()
+                controller.display_tournaments_report()
+            elif choice == "3":
+                clear_terminal()
+                tournament = TournamentController.select_tournament()
+                if tournament:
+                    if not tournament.start_date:
+                        self.view.display_message("Ce tournoi n'a pas commence")
+                    elif not tournament.end_date:
+                        self.view.display_message("Ce tournois n'est pas termine")
+                    else:
+                        self.report_submenu(tournament)
+            elif choice == "4":
+                clear_terminal()
+                break
+            else:
+                self.view.display_invalid_choice()
+
+    def report_submenu(self, tournament):
+
+        controller = ReportController()
+
+        while True:
+            self.view.display_report_submenu(tournament)
+            choice = self.view.get_user_choice()
+
+            if choice == "1":
+                clear_terminal()
+                controller.display_tournament_players_report(tournament)
+            elif choice == "2":
+                clear_terminal()
+                controller.display_tournament_rounds_and_matches(tournament)
+            elif choice == "3":
+                clear_terminal()
+                break
+            else:
+                self.view.display_invalid_choice()
             
     def main_menu(self):
 
@@ -73,9 +121,11 @@ class MenuController:
             elif choice == "2":
                 clear_terminal()
                 self.tournament_menu()
+            elif choice == "3":
+                clear_terminal()
+                self.report_menu()
             elif choice == "4":
                 self.view.display_goodbye()
                 break
             else:
-                clear_terminal()
-                print("En construction")
+                self.view.display_invalid_choice()

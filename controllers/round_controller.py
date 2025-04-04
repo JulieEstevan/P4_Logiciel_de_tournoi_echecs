@@ -14,7 +14,7 @@ class RoundController:
     def first_round(tournament):
 
         first_round = Round(name="Round 1")
-        first_round.start_date = str(datetime.now())
+        first_round.start_date = datetime.now().strftime('%d/%m/%Y %H:%M:%S')
         tournament.current_round = 1
         shuffle(tournament.players)
         tournament_players = tournament.players
@@ -37,7 +37,7 @@ class RoundController:
             first_round.append_match(match.match_json())
             tournament.update_player_score(match.player1[1], match.player1[2], tournament)
             tournament.update_player_score(match.player2[1], match.player2[2], tournament)
-        first_round.end_date = str(datetime.now())
+        first_round.end_date = datetime.now().strftime('%d/%m/%Y %H:%M:%S')
         tournament.rounds.append(first_round.round_json())
         tournament.add_round(tournament)
     

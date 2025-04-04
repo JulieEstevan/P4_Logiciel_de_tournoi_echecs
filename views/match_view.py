@@ -1,7 +1,7 @@
 class MatchView:
 
     @staticmethod
-    def display_matches(match, round):
+    def display_matches(match):
 
         print(f"\n--- Match --- {match.player1[0]} contre {match.player2[0]}")
 

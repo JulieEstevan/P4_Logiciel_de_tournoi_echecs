@@ -79,8 +79,11 @@ class TournamentController:
             )
             for player in tournament["players"]:
                 tournament_model.add_player(player)
-            if not tournament_model.end_date:
-                available_tournaments.append(tournament_model)
+            for round in tournament["rounds"]:
+                tournament_model.rounds.append(round)
+            tournament_model.start_date = tournament["start_date"]
+            tournament_model.end_date = tournament["end_date"]
+            available_tournaments.append(tournament_model)
         if available_tournaments == []:
             TournamentView.display_message("Aucun tournoi disponible.")
             return
@@ -103,13 +106,23 @@ class TournamentController:
     @staticmethod
     def play_tournament(tournament):
 
-        """tournament.start_date = datetime.now().strftime("%d/%m/%Y")
+        tournament.start_date = datetime.now().strftime("%d/%m/%Y")
+        TournamentView.display_message("\n--- Debut du tournoi ---")
         RoundController.first_round(tournament)
         while tournament.current_round < tournament.number_of_rounds:
             RoundController.generate_round(tournament)
         tournament.end_date = datetime.now().strftime("%d/%m/%Y")
         tournament.description = TournamentView.requested_tournament_description()
-        tournament.end_tournament(tournament)"""
+        tournament.end_tournament(tournament)
         tournament.players = tournament.get_ranking(tournament.players)
         TournamentView.tournament_summary(tournament)
         TournamentView.display_message(f"\nLe tournoi -- {tournament.name} -- est terminé.")
+
+    @staticmethod
+    def display_tournaments_list():
+
+        tournaments_list = Tournament.load_tournaments()
+        if not tournaments_list:
+            TournamentView.display_message("Aucun tournoi disponible.")
+        else:
+            TournamentView.tournaments_list(tournaments_list)

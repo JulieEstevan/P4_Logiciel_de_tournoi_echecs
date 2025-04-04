@@ -55,7 +55,7 @@ class PlayerView:
         -------
         None
         """
-
+        print("\n------ Liste des Joueurs ------\n")
         print(tabulate(list, headers="keys"))
     
     @staticmethod

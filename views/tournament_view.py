@@ -30,16 +30,30 @@ class TournamentView:
 
         return choice
     
+    @staticmethod
     def display_tournament_list_by_index(tournaments):
         for index, tournament in enumerate(tournaments, start=1):
             print(f"{index}. {tournament.name}")
 
+    @staticmethod
+    def tournaments_list(tournaments):
+
+        print("\n------ Liste des Tournois ------\n")
+        for tournament in tournaments:
+            if not tournament["end_date"]:
+                print(f"• {tournament["name"]} à {tournament["location"]}")
+            else:
+                print(f"• {tournament["name"]} à {tournament["location"]} du {tournament["start_date"]} au {tournament["end_date"]}")
+
+    @staticmethod
     def choice_for_tournament_to_start():
         return input("Entrez le numéro du tournoi à sélectionner (ou 'retour' pour revenir au menu principal : ")
     
+    @staticmethod
     def requested_tournament_description():
         return input(f"Entrez la description du tournoi :")
     
+    @staticmethod
     def tournament_summary(tournament):
         print("\n---- Récapitulatif du tournoi ----\n")
         print(f"Le tournoi -- {tournament.name} -- se deroulant a {tournament.location} a debute le {tournament.start_date} et s'est termine le {tournament.end_date}")
