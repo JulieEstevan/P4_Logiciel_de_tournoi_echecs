@@ -7,7 +7,7 @@ class TournamentView:
     Attributes
     ----------
     None
-    
+
     Methods
     -------
     request_tournament_info()
@@ -46,9 +46,9 @@ class TournamentView:
         number_of_rounds: int = input("Nombre de tours: ")
 
         return name, location, number_of_rounds
-    
+
     @staticmethod
-    def display_players_list_by_index(players : list) -> None:
+    def display_players_list_by_index(players: list) -> None:
         """
         Displays the tournament's players list with an index to the user.
 
@@ -78,9 +78,9 @@ class TournamentView:
         choice: str = input("Entrez les numéros des joueurs à ajouter (par exemple, 1,3,5 ou 't' pour terminer) : ")
 
         return choice
-    
+
     @staticmethod
-    def display_tournament_list_by_index(tournaments : list) -> None:
+    def display_tournament_list_by_index(tournaments: list) -> None:
         """
         Displays all the tournaments in a list with index to the user.
 
@@ -98,7 +98,7 @@ class TournamentView:
             print(f"{index}. {tournament.name}")
 
     @staticmethod
-    def tournaments_list(tournaments : list) -> None:
+    def tournaments_list(tournaments: list) -> None:
         """
         Displays all the tournaments with their basic info to the user.
 
@@ -117,9 +117,11 @@ class TournamentView:
             if not tournament["start_date"] and not tournament["end_date"]:
                 print(f"• {tournament["name"]} à {tournament["location"]} (À venir ...)")
             elif tournament["start_date"] and not tournament["end_date"]:
-                print(f"• {tournament["name"]} à {tournament["location"]} demarré le {tournament["start_date"]} (En cours ...)")
+                print(f"• {tournament["name"]} à {tournament["location"]}"
+                      f" demarré le {tournament["start_date"]} (En cours ...)")
             else:
-                print(f"• {tournament["name"]} à {tournament["location"]} du {tournament["start_date"]} au {tournament["end_date"]}")
+                print(f"• {tournament["name"]} à {tournament["location"]}"
+                      f" du {tournament["start_date"]} au {tournament["end_date"]}")
 
     @staticmethod
     def choice_for_tournament_to_start() -> str:
@@ -133,7 +135,7 @@ class TournamentView:
         """
 
         return input("Entrez le numéro du tournoi à sélectionner (ou 'retour' pour revenir au menu principal : ")
-    
+
     @staticmethod
     def requested_tournament_description() -> str:
         """
@@ -145,8 +147,8 @@ class TournamentView:
             User's text for the description.
         """
 
-        return input(f"Entrez la description du tournoi :")
-    
+        return input("Entrez la description du tournoi :")
+
     @staticmethod
     def tournament_summary(tournament) -> None:
         """
@@ -163,7 +165,8 @@ class TournamentView:
         """
 
         print("\n---- Récapitulatif du tournoi ----\n")
-        print(f"Le tournoi -- {tournament.name} -- se déroulant à {tournament.location} a débuté le {tournament.start_date} et s'est termine le {tournament.end_date}")
+        print(f"Le tournoi -- {tournament.name} -- se déroulant à {tournament.location}"
+              f" a débuté le {tournament.start_date} et s'est termine le {tournament.end_date}")
         print(f"C'était un tournoi en {tournament.number_of_rounds} tours, avec {len(tournament.players)} joueurs")
         print("\n---- Classement des joueurs ----\n")
         for index, player in enumerate(tournament.players, start=1):

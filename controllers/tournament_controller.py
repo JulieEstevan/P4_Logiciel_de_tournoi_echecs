@@ -3,6 +3,8 @@ from models.player_model import Player
 from views.tournament_view import TournamentView
 from controllers.round_controller import RoundController
 from datetime import datetime
+
+
 class TournamentController:
     """
     Manages all operations related to tournaments.
@@ -20,7 +22,8 @@ class TournamentController:
     select_tournament()
         Return a specific tournament based on user's choice.
     play_tournament(tournament)
-        Launch a specific tournament, from its start to its end, with the ability to quit it and resume it where it stopped.
+        Launch a specific tournament, from its start to its end,
+        with the ability to quit it and resume it where it stopped.
     display_tournaments_list()
         Displays the list of all the tournaments in the tournaments table.
     """
@@ -57,18 +60,23 @@ class TournamentController:
         TournamentView.display_players_list_by_index(available_players)
 
         # Loop to allow selection of multiple players
-        added_players: set = set() # To avoid duplicates
+        added_players: set = set()  # To avoid duplicates
         while True:
             choice = TournamentView.choice_for_players_to_add()
             if choice.lower() == "t":
                 # Check if the user have enter players
                 if not added_players:
-                    TournamentView.display_message("\nAucun joueur sélectionné, veuillez sélectionner des joueurs avant de terminer la sélection")
+                    TournamentView.display_message(
+                        "\nAucun joueur sélectionné, veuillez sélectionner des joueurs avant"
+                        " de terminer la sélection")
                 # Force the user to enter a minimum of players based on the number of rounds
                 elif len(added_players) < int(number_of_rounds) + 1:
-                    TournamentView.display_message(f"\nLe nombre de joueurs est insuffisant pour ce tournoi. Nombre de joueurs minimum requis = {int(number_of_rounds) + 1}")
+                    TournamentView.display_message(
+                        "\nLe nombre de joueurs est insuffisant pour ce tournoi."
+                        f"Nombre de joueurs minimum requis = {int(number_of_rounds) + 1}")
                 elif len(added_players) % 2 != 0:
-                    TournamentView.display_message(f"\nCe gestionnaire de tournoi ne peut gérer qu'un nombre pairs de joueurs.")
+                    TournamentView.display_message(
+                        "\nCe gestionnaire de tournoi ne peut gérer qu'un nombre pairs de joueurs.")
                 else:
                     break
 
@@ -81,15 +89,19 @@ class TournamentController:
                         if player not in added_players:
                             tournament.add_player(player.player_json())
                             added_players.add(player)
-                            TournamentView.display_message(f"Le joueur {player.last_name} {player.first_name} a été ajouté au tournoi.\n")
+                            TournamentView.display_message(
+                                f"Le joueur {player.last_name} {player.first_name} a été ajouté au tournoi.\n")
                         else:
-                            TournamentView.display_message(f"Le joueur {player.last_name} {player.first_name} a déjà été ajouté au tournoi.\n")
+                            TournamentView.display_message(
+                                f"Le joueur {player.last_name} {player.first_name} a déjà été ajouté au tournoi.\n")
                     else:
-                        TournamentView.display_message(f"Le numéro {index + 1} est invalide. Veuillez entrer un numéro valide.")
+                        TournamentView.display_message(
+                            f"Le numéro {index + 1} est invalide. Veuillez entrer un numéro valide.")
             except ValueError:
-                TournamentView.display_message("\nVeuillez entrer un numéro, ou des numéros séparés par des virgules.\n")
+                TournamentView.display_message(
+                    "\nVeuillez entrer un numéro, ou des numéros séparés par des virgules.\n")
 
-        # Finalize the creation of the tournament        
+        # Finalize the creation of the tournament
         Tournament.save_tournament(tournament.tournament_json())
         TournamentView.display_message(f"\nLe tournoi -- {name} -- a été créé avec succès.")
 
@@ -147,7 +159,8 @@ class TournamentController:
     @staticmethod
     def play_tournament(tournament) -> None:
         """
-        Launch a specific tournament, from its start to its end, with the ability to quit it and resume it where it stopped.
+        Launch a specific tournament, from its start to its end,
+        with the ability to quit it and resume it where it stopped.
 
         Parameters
         ----------
@@ -162,19 +175,19 @@ class TournamentController:
         # Warns the user from potential miss match if the ratio number of players / numbers of round isn't optimal
         if len(tournament.players) != 2**(tournament.number_of_rounds - 1):
             TournamentView.display_message(
-                "\nCe gestionnaire de tournoi fonctionne sous le système de ronde Suisse optimale. " \
-                "\nIci le rapport entre le nombre de joueurs et le nombre de rounds n'est pas optimal. " \
+                "\nCe gestionnaire de tournoi fonctionne sous le système de ronde Suisse optimale."
+                "\nIci le rapport entre le nombre de joueurs et le nombre de rounds n'est pas optimal."
                 "\nCeci peut entraîner certains joueurs à ne pas effectuer de match lors du dernier tour.")
-        
+
         # Check if the tournament already started, if not starts it
-        if tournament.start_date == None:
+        if tournament.start_date is None:
             tournament.start_date = datetime.now().strftime("%d/%m/%Y")
             tournament.current_round = 1
             tournament.start_tournament(tournament)
             TournamentView.display_message("\n--- Debut du tournoi ---")
         else:
-            TournamentView.display_message("\n /!\ Ce tournoi a déjà débuté. Reprise du tournoi. /!\ ")
-        
+            TournamentView.display_message("\n !! Ce tournoi a déjà débuté. Reprise du tournoi. !! ")
+
         # Verifies if the tournament is at its first round, if yes starts the first round
         if tournament.current_round == 1:
             RoundController.first_round(tournament)
@@ -182,7 +195,7 @@ class TournamentController:
         # Loop to creates and plays the rounds until it reaches the tournament's number of round
         while tournament.current_round < tournament.number_of_rounds + 1:
             RoundController.generate_round(tournament)
-        
+
         # Ends the tournament and displays a short summary of it
         tournament.end_date = datetime.now().strftime("%d/%m/%Y")
         tournament.description = TournamentView.requested_tournament_description()

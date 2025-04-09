@@ -1,6 +1,7 @@
 from models.player_model import Player
 from views.player_view import PlayerView
 
+
 class PlayerController:
     """
     Manages all operations related to players.
@@ -56,10 +57,10 @@ class PlayerController:
                     player["national_id"],
                 )
             players.append(
-                {"Nom" : player_model.last_name,
-                 "Prenom" : player_model.first_name,
-                 "Date de naissance" : player_model.birth_date,
-                 "ID" : player_model.national_id,}
+                {"Nom": player_model.last_name,
+                 "Prenom": player_model.first_name,
+                 "Date de naissance": player_model.birth_date,
+                 "ID": player_model.national_id}
             )
         players = sorted(players, key=str)
         if players == []:

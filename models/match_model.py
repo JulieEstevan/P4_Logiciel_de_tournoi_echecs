@@ -10,14 +10,20 @@ class Match:
         The player one of a match, represent with a list of their name, score and national id.
     player2 : list
         The player two of a match, represent with a list of their name, score and national id.
-    
+
     Methods
     -------
     match_json()
         Returns the match data in JSON format.
     """
 
-    def __init__(self, player1_name: str, player1_score: float, player1_national_id, player2_name: str, player2_score: float, player2_national_id) -> None:
+    def __init__(
+            self, player1_name: str,
+            player1_score: float,
+            player1_national_id,
+            player2_name: str,
+            player2_score: float,
+            player2_national_id) -> None:
         """
         Initializes a new match
 
@@ -40,7 +46,7 @@ class Match:
         -------
         None
         """
-        
+
         self.player1 = [player1_name, player1_score, player1_national_id]
         self.player2 = [player2_name, player2_score, player2_national_id]
 
@@ -53,13 +59,13 @@ class Match:
         self : str
             A string representation of the match.
         """
-        
+
         return f"{self.player1[0]} (Score: {self.player1[1]}) contre {self.player2[0]} (Score: {self.player2[1]})"
-    
+
     def match_json(self) -> dict:
         """
         Returns the match data in JSON format.
-        
+
         Returns
         -------
         match : dict
@@ -74,5 +80,5 @@ class Match:
                 self.player2[0], self.player2[1]
             ]
         }
-        
+
         return match

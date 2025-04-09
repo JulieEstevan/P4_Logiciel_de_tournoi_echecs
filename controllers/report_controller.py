@@ -4,6 +4,7 @@ from views.round_view import RoundView
 from controllers.player_controller import PlayerController
 from controllers.tournament_controller import TournamentController
 
+
 class ReportController:
     """
     Manages all the operations related to the report features.
@@ -75,11 +76,11 @@ class ReportController:
                 )
             player_model.points = player["points"]
             players_list.append(
-                {"Nom" : player_model.last_name,
-                 "Prenom" : player_model.first_name,
-                 "Score" : f"{player_model.points} p",
-                 "Date de naissance" : player_model.birth_date,
-                 "ID" : player_model.national_id}
+                {"Nom": player_model.last_name,
+                 "Prenom": player_model.first_name,
+                 "Score": f"{player_model.points} p",
+                 "Date de naissance": player_model.birth_date,
+                 "ID": player_model.national_id}
             )
         players_list = sorted(players_list, key=str)
         PlayerView.players_list(players_list)

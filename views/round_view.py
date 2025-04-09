@@ -7,7 +7,7 @@ class RoundView:
     Attributes
     ----------
     None
-    
+
     Methods
     -------
     display_ranking(players : list)
@@ -30,7 +30,7 @@ class RoundView:
 
         Raises
         ------
-        
+
 
         Returns
         -------
@@ -75,4 +75,5 @@ class RoundView:
         None
         """
 
-        print(f"• {match["player1"][0]} (Score: {match["player1"][1]}) contre {match["player2"][0]} (Score: {match["player2"][1]})")
+        print(f"• {match["player1"][0]} (Score: {match["player1"][1]}) contre"
+              f" {match["player2"][0]} (Score: {match["player2"][1]})")

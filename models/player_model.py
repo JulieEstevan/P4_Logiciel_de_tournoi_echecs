@@ -2,6 +2,7 @@ import re
 import os
 from tinydb import TinyDB
 
+
 class Player:
     """
     Defines a player in a tournament.
@@ -10,17 +11,17 @@ class Player:
 
     Attributes
     ----------
-    last_name : str 
+    last_name : str
         Player's last name
     first_name : str
         Player's first name
-    birth_date : str 
+    birth_date : str
         Player's birth date
     national_id : str
         Player's national ID
     points : float, optional
         Player's points in a tournament
-    
+
     Methods
     -------
     player_json()
@@ -41,11 +42,11 @@ class Player:
 
         Parameters
         ----------
-        last_name : str 
+        last_name : str
             Player's last name
         first_name : str
             Player's first name
-        birth_date : str 
+        birth_date : str
             Player's birth date
         national_id : str
             Player's national ID
@@ -68,12 +69,14 @@ class Player:
 
         # Validation of the national ID format
         if not re.match(r'^[A-Z]{2}\d{5}$', self.national_id):
-            raise ValueError("Erreur de format, l'identité nationale doit être composée de deux lettres suivies de cinq chiffres. (e.g., AB12345)")
-        
+            raise ValueError(
+                "Erreur de format, l'ID nationale doit être composée de deux lettres"
+                " suivies de cinq chiffres. (e.g., AB12345)")
+
         # Validation of the birth date format
         if not re.match(r'^\d{2}/\d{2}/\d{4}$', self.birth_date):
             raise ValueError("Erreur de format, la date de naissance doit être au format jj/mm/aaaa.")
-        
+
     def __str__(self) -> str:
         """
         Returns a string representation of the player.
@@ -85,7 +88,7 @@ class Player:
         """
 
         return f"{self.last_name} {self.first_name} ({self.national_id})"
-    
+
     def __repr__(self) -> str:
         """
         Returns a string representation of the player.
@@ -97,7 +100,7 @@ class Player:
         """
 
         return f"{self.last_name} {self.first_name} ({self.national_id})"
-    
+
     def player_json(self) -> dict:
         """
         Returns player data in JSON format.
@@ -128,7 +131,7 @@ class Player:
             Players table using TinyDB
         """
 
-         # Directory and JSON file creation if it doesn't already exist
+        # Directory and JSON file creation if it doesn't already exist
         directory = os.path.dirname("data/players.json")
         if not os.path.exists(directory):
             os.makedirs(directory)
@@ -147,12 +150,12 @@ class Player:
         ----------
         player : dict
             Player's info turned into JSON format
-        
+
         Returns
         -------
         None
         """
-        
+
         cls.players_db().insert(player)
 
     @classmethod
@@ -169,7 +172,7 @@ class Player:
         players_data = cls.players_db().all()
 
         return players_data
-    
+
     def update_points(self, points: float) -> None:
         """
         Updates the player's points.

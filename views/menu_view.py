@@ -7,7 +7,7 @@ class MenuView:
     Attributes
     ----------
     None
-    
+
     Methods
     -------
     display_main_menu()
@@ -50,7 +50,7 @@ class MenuView:
     def display_player_menu() -> None:
         """
         Displays the player menu and its options to the user.
-        
+
         Returns
         -------
         None
@@ -65,7 +65,7 @@ class MenuView:
     def display_tournament_menu() -> None:
         """
         Displays the tournament menu and its options to the user.
-        
+
         Returns
         -------
         None
@@ -81,7 +81,7 @@ class MenuView:
     def display_report_menu() -> None:
         """
         Displays the report menu and its options to the user.
-        
+
         Returns
         -------
         None
@@ -102,14 +102,15 @@ class MenuView:
         ----------
         tournament : Tournament
             A specific tournament.
-        
+
         Returns
         -------
         None
         """
 
         print("\n--- Menu Tournoi détaillé ---\n")
-        print(f"Nom : {tournament.name}\nLieu : {tournament.location}\nDébut : {tournament.start_date}\nFin : {tournament.end_date}")
+        print(f"Nom : {tournament.name}\nLieu : {tournament.location}"
+              f"\nDébut : {tournament.start_date}\nFin : {tournament.end_date}")
 
         print("\n--- Choisir les détails du tournoi à afficher ---\n")
         print("1. Afficher la liste des joueurs")
@@ -152,7 +153,7 @@ class MenuView:
         """
 
         return input("Sélectionner une option: ")
-    
+
     @staticmethod
     def display_message(message) -> str:
         """

@@ -4,6 +4,7 @@ from controllers.tournament_controller import TournamentController
 from controllers.report_controller import ReportController
 from utils.clear import clear_terminal
 
+
 class MenuController:
     """
     Manages all the operations related to the menu navigation for the user.
@@ -36,7 +37,7 @@ class MenuController:
         -------
         None
         """
-        
+
         self.view = MenuView()
 
     def player_menu(self) -> None:
@@ -169,7 +170,7 @@ class MenuController:
                 break
             else:
                 self.view.display_invalid_choice()
-            
+
     def main_menu(self) -> None:
         """
         Make an action from the main menu depending on user choice.

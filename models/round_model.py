@@ -16,7 +16,7 @@ class Round:
         Round's ending date in DD/MM/YYYY HH/MM/SS format, defaults to None
     matches : list, optional
         Round's list of its matches, defaults to an empty list
-    
+
     Methods
     -------
     round_json()
@@ -25,7 +25,7 @@ class Round:
         Adds match to the round's matches list.
     """
 
-    def __init__(self, name : str) -> None:
+    def __init__(self, name: str) -> None:
         """
         Initializes a new round.
 
@@ -38,7 +38,7 @@ class Round:
         -------
         None
         """
-        
+
         self.name = name
         self.number = 1
         self.start_date = None
@@ -64,7 +64,7 @@ class Round:
         }
 
         return round
-    
+
     def append_match(self, match) -> None:
         """
         Adds match to the round's matches list.

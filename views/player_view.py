@@ -1,6 +1,7 @@
 from tabulate import tabulate
 from typing import Any
 
+
 class PlayerView:
     """
     Displays players information and messages for interact with the user and giving them specific info.
@@ -40,7 +41,7 @@ class PlayerView:
         national_id: str = input("ID National (ex: AB12345): ")
 
         return last_name, first_name, birth_date, national_id
-    
+
     @staticmethod
     def players_list(list: list) -> None:
         """
@@ -57,7 +58,7 @@ class PlayerView:
         """
         print("\n------ Liste des Joueurs ------\n")
         print(tabulate(list, headers="keys"))
-    
+
     @staticmethod
     def display_player_added_successfully(last_name: str, first_name: str) -> None:
         """

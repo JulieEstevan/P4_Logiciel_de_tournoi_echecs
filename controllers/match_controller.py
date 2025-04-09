@@ -1,5 +1,6 @@
 from views.match_view import MatchView
 
+
 class MatchController:
     """
     Manages the operations related to the matches.

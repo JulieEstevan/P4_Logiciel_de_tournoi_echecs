@@ -6,6 +6,7 @@ from controllers.match_controller import MatchController
 from datetime import datetime
 from random import shuffle
 
+
 class RoundController:
     """
     Manages all operations related to the rounds.
@@ -23,7 +24,7 @@ class RoundController:
     geerate_rounds(tournament)
         Creates a round and its matches by ranking the players by score and picking only new pairs.
     """
-    
+
     @staticmethod
     def first_round(tournament) -> None:
         """
@@ -73,7 +74,7 @@ class RoundController:
         tournament.rounds.append(first_round.round_json())
         tournament.current_round += 1
         tournament.add_round(tournament)
-    
+
     @staticmethod
     def generate_round(tournament) -> None:
         """
@@ -137,7 +138,7 @@ class RoundController:
             tournament.update_players_score(match.player2[1], match.player2[2], tournament)
 
         # Ends the round
-        round.end_date= datetime.now().strftime('%d/%m/%Y %H:%M:%S')
+        round.end_date = datetime.now().strftime('%d/%m/%Y %H:%M:%S')
         tournament.rounds.append(round.round_json())
         tournament.current_round += 1
         tournament.add_round(tournament)

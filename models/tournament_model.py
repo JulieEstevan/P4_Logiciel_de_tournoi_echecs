@@ -1,6 +1,7 @@
 import os
 from tinydb import TinyDB, Query
 
+
 class Tournament:
     """
     Defines a tournament.
@@ -68,12 +69,12 @@ class Tournament:
             Tournament's location
         number_of_rounds : int
             Tournament's number of rounds in total, defaults to 4
-        
+
         Returns
         -------
         None
         """
-        
+
         self.name = name
         self.location = location
         self.start_date = None
@@ -109,7 +110,7 @@ class Tournament:
         }
 
         return tournament_json
-    
+
     def add_player(self, player) -> None:
         """
         Adds a player in the tournament's players list.
@@ -140,7 +141,8 @@ class Tournament:
         None
         """
 
-        self.tournaments_db().update({"pairs_already_played" : self.pairs_already_played}, Query().name == tournament.name)
+        self.tournaments_db().update(
+            {"pairs_already_played": self.pairs_already_played}, Query().name == tournament.name)
 
     def add_round(self, tournament) -> None:
         """
@@ -156,10 +158,10 @@ class Tournament:
         None
         """
 
-        self.tournaments_db().update({"rounds" : self.rounds}, Query().name == tournament.name)
-        self.tournaments_db().update({"current_round" : self.current_round}, Query().name == tournament.name)
-        
-    def update_players_score(self, player_points : float, player_id : str, tournament) -> None:
+        self.tournaments_db().update({"rounds": self.rounds}, Query().name == tournament.name)
+        self.tournaments_db().update({"current_round": self.current_round}, Query().name == tournament.name)
+
+    def update_players_score(self, player_points: float, player_id: str, tournament) -> None:
         """
         Updates the tournament's players score in the tournaments table.
 
@@ -180,9 +182,9 @@ class Tournament:
         for player in self.players:
             if player["national_id"] == player_id:
                 player["points"] = player_points
-        self.tournaments_db().update({"players" : self.players}, Query().name == tournament.name)
+        self.tournaments_db().update({"players": self.players}, Query().name == tournament.name)
 
-    def get_ranking(self, players : list) -> list:
+    def get_ranking(self, players: list) -> list:
         """
         Returns a sorted list of the players in the tournaments based on theirs points.
 
@@ -202,7 +204,7 @@ class Tournament:
         )
 
         return ranking
-    
+
     def start_tournament(self, tournament) -> None:
         """
         Starts the tournament by updating its start date and current round in the tournaments table.
@@ -216,10 +218,10 @@ class Tournament:
         -------
         None
         """
-    
-        self.tournaments_db().update({"start_date" : self.start_date}, Query().name == tournament.name)
-        self.tournaments_db().update({"current_round" : self.current_round}, Query().name == tournament.name)
-    
+
+        self.tournaments_db().update({"start_date": self.start_date}, Query().name == tournament.name)
+        self.tournaments_db().update({"current_round": self.current_round}, Query().name == tournament.name)
+
     def end_tournament(self, tournament) -> None:
         """
         End the tournament by updating its end date and description in the tournament table.
@@ -234,9 +236,9 @@ class Tournament:
         None
         """
 
-        self.tournaments_db().update({"end_date" : self.end_date}, Query().name == tournament.name)
-        self.tournaments_db().update({"description" : self.description}, Query().name == tournament.name)
-    
+        self.tournaments_db().update({"end_date": self.end_date}, Query().name == tournament.name)
+        self.tournaments_db().update({"description": self.description}, Query().name == tournament.name)
+
     @classmethod
     def tournaments_db(cls) -> TinyDB:
         """
