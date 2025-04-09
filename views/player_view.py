@@ -3,7 +3,7 @@ from typing import Any
 
 class PlayerView:
     """
-    Displays players information and messages for interact with the user.
+    Displays players information and messages for interact with the user and giving them specific info.
 
     ...
 
@@ -14,9 +14,9 @@ class PlayerView:
     Methods
     -------
     request_player_info
-        Asks user for player info and returns them in a tuple.
+        Asks the user for player info and returns them in a tuple.
     player_list(list: list)
-        Show the list of all the players in a easy readible format.
+        Displays the list of all the players in a easy readible format.
     display_player_added_successfully()
         Displays a message to inform the user that the player has been successfully added.
     display_error(error: Any)
@@ -44,7 +44,7 @@ class PlayerView:
     @staticmethod
     def players_list(list: list) -> None:
         """
-        Show the list of all the players in a easy readible format.
+        Displays the list of all the players in a easy readible format.
 
         Parameters
         ----------

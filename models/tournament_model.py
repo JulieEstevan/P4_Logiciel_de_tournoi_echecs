@@ -1,7 +1,4 @@
-from models.round_model import Round
-from models.player_model import Player
 import os
-from datetime import datetime
 from tinydb import TinyDB, Query
 
 class Tournament:
@@ -39,12 +36,18 @@ class Tournament:
         Returns tournament data in a JSON format.
     add_player(player: Player)
         Adds a player in the tournament's players list.
+    update_pairs_already_played(tournament : Tournament)
+        Update the tournament's pairs already played in the tournament table.
     add_round(round_instance: Round)
-        Adds a round in the tournament's rounds list.
-    get_ranking()
-        Returns a sorted list of the players in the tournaments based on theirs points.
-    end_tournament()
-        End the tournament by adding the end date in the tournament data.
+        Adds a round in the tournament and updates it, and updates its current round in the tournaments table.
+    update_players_score(player_points : float, player_id : str, tournament : Tournament)
+        Updates the tournament's players score in the tournaments table.
+    get_ranking(players : list)
+        Returns a sorted list of the tournament's players list based on theirs points.
+    start_tournament(tournament : Tournament)
+        Starts the tournament by updating its start date and current round in the tournaments table.
+    end_tournament(tournament : Tournament)
+        End the tournament by updating its end date and description in the tournament table.
     tournament_db()
         Returns the access of the tournaments table.
     save_tournament(tournament: dict)
@@ -89,7 +92,7 @@ class Tournament:
         Returns
         -------
         tournament_json : dict
-            A dictionnary in JSON format
+            A dictionnary of the tournament for JSON format
         """
 
         tournament_json = {
@@ -123,18 +126,30 @@ class Tournament:
 
         self.players.append(player)
 
-    def update_pairs_already_played(self, tournament):
+    def update_pairs_already_played(self, tournament) -> None:
+        """
+        Update the tournament's pairs already played in the tournament table.
+
+        Parameters
+        ----------
+        tournament : Tournament
+            A specific tournament
+
+        Returns
+        -------
+        None
+        """
 
         self.tournaments_db().update({"pairs_already_played" : self.pairs_already_played}, Query().name == tournament.name)
 
     def add_round(self, tournament) -> None:
         """
-        Adds a round in the tournament's rounds list.
+        Adds a round in the tournament and updates it, and updates its current round in the tournaments table.
 
         Parameters
         ----------
-        round_instance : Round
-            Round to add in the round list
+        tournament : Tournament
+            A specific tournament
 
         Returns
         -------
@@ -144,16 +159,37 @@ class Tournament:
         self.tournaments_db().update({"rounds" : self.rounds}, Query().name == tournament.name)
         self.tournaments_db().update({"current_round" : self.current_round}, Query().name == tournament.name)
         
-    def update_player_score(self, player_points, player_id, tournament):
+    def update_players_score(self, player_points : float, player_id : str, tournament) -> None:
+        """
+        Updates the tournament's players score in the tournaments table.
+
+        Parameters
+        ----------
+        player_points : float
+            The point of the player
+        player_id : str
+            The national id of the player
+        tournament : Tournament
+            A specific tournament
+
+        Returns
+        -------
+        None
+        """
 
         for player in self.players:
             if player["national_id"] == player_id:
                 player["points"] = player_points
         self.tournaments_db().update({"players" : self.players}, Query().name == tournament.name)
 
-    def get_ranking(self, players) -> list:
+    def get_ranking(self, players : list) -> list:
         """
         Returns a sorted list of the players in the tournaments based on theirs points.
+
+        Parameters
+        ----------
+        players : list
+            List of the players to sort
 
         Returns
         -------
@@ -167,16 +203,37 @@ class Tournament:
 
         return ranking
     
+    def start_tournament(self, tournament) -> None:
+        """
+        Starts the tournament by updating its start date and current round in the tournaments table.
+
+        Parameters
+        ----------
+        tournament : Tournament
+            A specific tournament
+
+        Returns
+        -------
+        None
+        """
+    
+        self.tournaments_db().update({"start_date" : self.start_date}, Query().name == tournament.name)
+        self.tournaments_db().update({"current_round" : self.current_round}, Query().name == tournament.name)
+    
     def end_tournament(self, tournament) -> None:
         """
-        End the tournament by adding the end date in the tournament data.
+        End the tournament by updating its end date and description in the tournament table.
+
+        Parameters
+        ----------
+        tournament : Tournament
+            A specific tournament
 
         Returns
         -------
         None
         """
 
-        self.tournaments_db().update({"start_date" : self.start_date}, Query().name == tournament.name)
         self.tournaments_db().update({"end_date" : self.end_date}, Query().name == tournament.name)
         self.tournaments_db().update({"description" : self.description}, Query().name == tournament.name)
     

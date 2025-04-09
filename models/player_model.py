@@ -68,13 +68,25 @@ class Player:
 
         # Validation of the national ID format
         if not re.match(r'^[A-Z]{2}\d{5}$', self.national_id):
-            raise ValueError("Format error, the national ID must be two letters followed by five digits (e.g., AB12345)")
+            raise ValueError("Erreur de format, l'identité nationale doit être composée de deux lettres suivies de cinq chiffres. (e.g., AB12345)")
         
         # Validation of the birth date format
         if not re.match(r'^\d{2}/\d{2}/\d{4}$', self.birth_date):
-            raise ValueError("Format error, the birth date must be in the format dd/mm/yyyy")
+            raise ValueError("Erreur de format, la date de naissance doit être au format jj/mm/aaaa.")
         
     def __str__(self) -> str:
+        """
+        Returns a string representation of the player.
+
+        Returns
+        -------
+        self : str
+            A string that represent the player
+        """
+
+        return f"{self.last_name} {self.first_name} ({self.national_id})"
+    
+    def __repr__(self) -> str:
         """
         Returns a string representation of the player.
 
@@ -93,7 +105,7 @@ class Player:
         Returns
         -------
         player_json : dict
-            A dictionarry in JSON format
+            A dictionarry of the player for JSON format
         """
 
         player_json = {

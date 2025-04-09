@@ -14,7 +14,7 @@ class PlayerController:
     Methods
     -------
     add_player()
-        Retrieves player info from user's inputs for saving them, and if an error occured it displays an error message.
+        Retrieves player info from user's inputs, and if an error occured it displays an error message.
     display_players_list()
         Displays the list of all the players, if the list is empty it displays an error message.
     """

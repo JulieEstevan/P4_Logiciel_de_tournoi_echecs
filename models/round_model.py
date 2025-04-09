@@ -1,6 +1,43 @@
 class Round:
+    """
+    Defines a round in a tournament.
 
-    def __init__(self, name):
+    ...
+
+    Attributes
+    ----------
+    name : str
+        Round's name
+    number : int, optional
+        Round's number, default to 1
+    start_date : str, optional
+        Round's starting date in DD/MM/YYYY HH/MM/SS format, defaults to None
+    end_date : str, optional
+        Round's ending date in DD/MM/YYYY HH/MM/SS format, defaults to None
+    matches : list, optional
+        Round's list of its matches, defaults to an empty list
+    
+    Methods
+    -------
+    round_json()
+        Returns round data in JSON format.
+    append_match(match)
+        Adds match to the round's matches list.
+    """
+
+    def __init__(self, name : str) -> None:
+        """
+        Initializes a new round.
+
+        Parameters
+        ----------
+        name : str
+            Round's name
+
+        Returns
+        -------
+        None
+        """
         
         self.name = name
         self.number = 1
@@ -8,7 +45,15 @@ class Round:
         self.end_date = None
         self.matches = []
 
-    def round_json(self):
+    def round_json(self) -> dict:
+        """
+        Returns round data in JSON format.
+
+        Returns
+        -------
+        round : dict
+            A dictionnary of the round for JSON format
+        """
 
         round = {
             "name": self.name,
@@ -20,6 +65,18 @@ class Round:
 
         return round
     
-    def append_match(self, match):
+    def append_match(self, match) -> None:
+        """
+        Adds match to the round's matches list.
+
+        Parameters
+        ----------
+        match : Match
+            Represent a specific match.
+
+        Returns
+        -------
+        None
+        """
 
         self.matches.append(match)

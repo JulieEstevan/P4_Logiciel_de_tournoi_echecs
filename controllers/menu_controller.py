@@ -5,12 +5,48 @@ from controllers.report_controller import ReportController
 from utils.clear import clear_terminal
 
 class MenuController:
+    """
+    Manages all the operations related to the menu navigation for the user.
 
-    def __init__(self):
+    ...
+
+    Attributes
+    ----------
+    None
+
+    Methods
+    -------
+    player_menu()
+        Make an action from the player menu depending on user choice.
+    tournament_menu()
+        Make an action from the tournament menu depending on user choice.
+    report_menu()
+        Make an action from the report menu depending on user choice.
+    report_submenu()
+        Make an action from the report submenu depending on user choice.
+    main_menu()
+        Make an action from the main menu depending on user choice.
+    """
+
+    def __init__(self) -> None:
+        """
+        Initializes the link between the MenuView and itself.
+
+        Returns
+        -------
+        None
+        """
         
         self.view = MenuView()
 
-    def player_menu(self):
+    def player_menu(self) -> None:
+        """
+        Make an action from the player menu depending on user choice.
+
+        Returns
+        -------
+        None
+        """
 
         controller = PlayerController()
 
@@ -30,7 +66,14 @@ class MenuController:
             else:
                 self.view.display_invalid_choice()
 
-    def tournament_menu(self):
+    def tournament_menu(self) -> None:
+        """
+        Make an action from the tournament menu depending on user choice.
+
+        Returns
+        -------
+        None
+        """
 
         controller = TournamentController()
 
@@ -44,10 +87,11 @@ class MenuController:
             elif choice == "2":
                 clear_terminal()
                 tournament = controller.select_tournament()
-                if tournament and not tournament.end_date:
-                    controller.play_tournament(tournament)
-                else:
-                    self.view.display_message("Ce tournoi est deja termine")
+                if tournament:
+                    if tournament and not tournament.end_date:
+                        controller.play_tournament(tournament)
+                    else:
+                        self.view.display_message("Ce tournoi est deja termine")
             elif choice == "3":
                 clear_terminal()
                 controller.display_tournaments_list()
@@ -57,7 +101,14 @@ class MenuController:
             else:
                 self.view.display_invalid_choice()
 
-    def report_menu(self):
+    def report_menu(self) -> None:
+        """
+        Make an action from the report menu depending on user choice.
+
+        Returns
+        -------
+        None
+        """
 
         controller = ReportController()
 
@@ -87,7 +138,19 @@ class MenuController:
             else:
                 self.view.display_invalid_choice()
 
-    def report_submenu(self, tournament):
+    def report_submenu(self, tournament) -> None:
+        """
+        Make an action from the report submenu depending on user choice.
+
+        Parameters
+        ----------
+        tournament : Tournament
+            Represent a specific tournament
+
+        Returns
+        -------
+        None
+        """
 
         controller = ReportController()
 
@@ -107,7 +170,14 @@ class MenuController:
             else:
                 self.view.display_invalid_choice()
             
-    def main_menu(self):
+    def main_menu(self) -> None:
+        """
+        Make an action from the main menu depending on user choice.
+
+        Returns
+        -------
+        None
+        """
 
         clear_terminal()
 
